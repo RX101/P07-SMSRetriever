@@ -3,6 +3,7 @@ package com.example.a15041867.p07_smsretriever;
 
 import android.Manifest;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -44,6 +45,29 @@ public class FragmentNumber extends Fragment {
         btnNum =(Button)view.findViewById(R.id.buttonRetrieveNum);
         etMessage = (EditText)view.findViewById(R.id.ediTextNum);
         tvMessage = (TextView)view.findViewById(R.id.textViewNum);
+        Button btnRetrieveAndEmailNum =(Button)view.findViewById(R.id.buttonRetrieveEmailNum);
+
+        btnRetrieveAndEmailNum.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View arg0) {
+                // The action you want this intent to do;
+                // ACTION_SEND is used to indicate sending text
+                Intent email = new Intent(Intent.ACTION_SEND);
+                // Put essentials like email address, subject & body text
+                email.putExtra(Intent.EXTRA_EMAIL,
+                        new String[]{"jason_lim@rp.edu.sg"});
+                email.putExtra(Intent.EXTRA_SUBJECT,
+                        "SMS");
+                email.putExtra(Intent.EXTRA_TEXT,
+                        tvMessage.getText());
+                // This MIME type indicates email
+                email.setType("message/rfc822");
+                // createChooser shows user a list of app that can handle
+                // this MIME type, which is, email
+                startActivity(Intent.createChooser(email,
+                        "Choose an Email client :"));
+
+            }});
 
         btnNum.setOnClickListener(new View.OnClickListener() {
             @Override
